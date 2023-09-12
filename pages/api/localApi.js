@@ -1,0 +1,572 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+export default function handler(req, res) {
+  if(req.method === "GET"){
+    res.status(200).json({
+      products: [
+        {
+          id: 1,
+          name: "Apple / KG",
+          image: {
+            url: "https://static.vecteezy.com/system/resources/previews/020/899/511/original/red-apple-isolated-on-white-png.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 2,
+          name: "Banana / KG",
+          image: {
+            url: "https://www.imagensempng.com.br/wp-content/uploads/2021/07/06-1.png",
+            width: 500,
+            height: 500
+          },
+          price: 8.35,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 3,
+          name: "Orange / KG",
+          image: {
+            url: "https://purepng.com/public/uploads/large/purepng.com-orange-orangeorangefruitbitter-orangeorangesclip-art-17015273374288pjtg.png",
+            width: 500,
+            height: 500
+          },
+          price: 3.25,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 4,
+          name: "Tomato / KG",
+          image: {
+            url: "https://static.vecteezy.com/system/resources/previews/013/442/147/original/tomatoes-on-a-transparent-background-free-png.png",
+            width: 500,
+            height: 500
+          },
+          price: 2.55,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 5,
+          name: "Carrot / KG",
+          image: {
+            url: "https://www.pngmart.com/files/8/Carrot-Transparent-Background.png",
+            width: 500,
+            height: 500
+          },
+          price: 2.15,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 6,
+          name: "Grape / KG",
+          image: {
+            url: "https://www.pngall.com/wp-content/uploads/10/Black-Grapes-PNG-Clipart.png",
+            width: 500,
+            height: 500
+          },
+          price: 10.05,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 7,
+          name: "Onion / KG",
+          image: {
+            url: "https://www.pngall.com/wp-content/uploads/2016/03/Onion-PNG-File.png",
+            width: 500,
+            height: 500
+          },
+          price: 6.00,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 8,
+          name: "Lemon / KG",
+          image: {
+            url: "https://www.pngmart.com/files/13/Green-Lemon-PNG-Image.png",
+            width: 500,
+            height: 500
+          },
+          price: 3.30,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 9,
+          name: "Peppers / KG",
+          image: {
+            url: "https://www.freepnglogos.com/uploads/pepper-png/pepper-the-produce-blog-rick-chong-how-buy-fresh-fruit-1.png",
+            width: 500,
+            height: 500
+          },
+          price: 6.10,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 10,
+          name: "Eggplant / KG",
+          image: {
+            url: "https://freepngimg.com/thumb/eggplant/14-eggplant-png-images-download.png",
+            width: 500,
+            height: 500
+          },
+          price: 3.22,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 11,
+          name: "Lettuce",
+          image: {
+            url: "https://freepngimg.com/download/lettuce/155957-green-organic-lettuce-free-transparent-image-hd.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.60,
+          category: "Fruits and Vegetables"
+        },
+        {
+          id: 12,
+          name: "Milk - Elle & Vire",
+          image: {
+            url: "https://www.elle-et-vire.com/uploads/cache/400x400/uploads/recip/product/155/3d-lait-entier-bd.png",
+            width: 300,
+            height: 250
+          },
+          price: 2.20,
+          category: "Dairy products"
+        },
+        {
+          id: 13,
+          name: "Milk - Turners",
+          image: {
+            url: "https://turnerdairy.net/wp-content/uploads/2019/06/whole_gallon.png",
+            width: 300,
+            height: 250
+          },
+          price: 10.50,
+          category: "Dairy products"
+        },
+        {
+          id: 14,
+          name: "Yogurt - Elle & Vire",
+          image: {
+            url: "https://www.elle-et-vire.com/uploads/cache/400x400/uploads/recip/product/176/10074-elvir0-pomme.png",
+            width: 300,
+            height: 250
+          },
+          price: 5.25,
+          category: "Dairy products"
+        },
+        {
+          id: 15,
+          name: "Soft cheese - Philadelphia",
+          image: {
+            url: "https://www.nicepng.com/png/full/854-8548447_philadelphia-original-philadelphia-cheese-uk.png",
+            width: 300,
+            height: 250
+          },
+          price: 7.75,
+          category: "Dairy products"
+        },
+        {
+          id: 16,
+          name: "Butter - Elle & Vire",
+          image: {
+            url: "https://www.elle-et-vire.com/uploads/cache/400x400/uploads/recip/product/399/5ee344b91c6a5_03451790941610-a1l1-se04644-a.png",
+            width: 300,
+            height: 250
+          },
+          price: 5.29,
+          category: "Dairy products"
+        },
+        {
+          id: 17,
+          name: "Corn flakes - Kellogg's",
+          image: {
+            url: "https://images.kglobalservices.com/www.kelloggs.co.za/en_za/product/product_1370097/prod_img-1370158_za_06001306000996_2204261808_p_1.png",
+            width: 500,
+            height: 500
+          },
+          price: 12.35,
+          category: "Packaged products"
+        },
+        {
+          id: 18,
+          name: "Corn flakes - Malt O Meal",
+          image: {
+            url: "https://www.maltomeal.com/wp-content/uploads/2018/06/Frosted-Flakes-cereal.png",
+            width: 500,
+            height: 500
+          },
+          price: 4.79,
+          category: "Packaged products"
+        },
+        {
+          id: 19,
+          name: "Cereal - Post",
+          image: {
+            url: "https://www.pngmart.com/files/22/Breakfast-cereal-PNG-File.png",
+            width: 500,
+            height: 500
+          },
+          price: 15.60,
+          category: "Packaged products"
+        },
+        {
+          id: 20,
+          name: "Spaghetti - Barilla",
+          image: {
+            url: "https://www.barilla.com//-/media/images/pt_br/products/cards/massa-com-ovos/novo/fb_aw_3d_11151_swwe_espaguete_8_500g_blu_v1.png",
+            width: 500,
+            height: 500
+          },
+          price: 3.35,
+          category: "Packaged products"
+        },
+        {
+          id: 21,
+          name: "Macaroni - Rao's",
+          image: {
+            url: "https://www.raos.com/cdn/shop/products/penne-rigate_5d081d75-f549-427c-9e2e-f2f2e0a90b6d_533x.png?v=1689192907",
+            width: 500,
+            height: 500
+          },
+          price: 2.20,
+          category: "Packaged products"
+        },
+        {
+          id: 22,
+          name: "White Rice - Minute",
+          image: {
+            url: "https://cdn.gardengrocer.com/attachments/photos/high_res/730.png?5308",
+            width: 500,
+            height: 500
+          },
+          price: 6.43,
+          category: "Packaged products"
+        },
+        {
+          id: 23,
+          name: "Bis",
+          image: {
+            url: "https://giassi.vtexassets.com/arquivos/ids/585661/Wafer-Cobertura-Chocolate-Branco-Lacta-Bis-Pacote-126g-.png?v=638143169988770000",
+            width: 500,
+            height: 500
+          },
+          price: 5.55,
+          category: "Packaged products"
+        },
+        {
+          id: 24,
+          name: "Ketchup - Heinz",
+          image: {
+            url: "https://www.pngmart.com/files/5/Ketchup-PNG-HD.png",
+            width: 500,
+            height: 500
+          },
+          price: 7.24,
+          category: "Packaged products"
+        },
+        {
+          id: 25,
+          name: "Mayonnaise - Heinz",
+          image: {
+            url: "https://d36rz30b5p7lsd.cloudfront.net/640/studio/assets/v1627639952124_68670991/mayonnise.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.22,
+          category: "Packaged products"
+        },
+        {
+          id: 26,
+          name: "Pasta - De Cecco",
+          image: {
+            url: "https://www.dececco.com/wp-content/uploads/2022/03/5SG4914SUGO-ALLA-ARRABBIATA-1-2.png",
+            width: 500,
+            height: 500
+          },
+          price: 9.10,
+          category: "Packaged products"
+        },
+        {
+          id: 27,
+          name: "Juice - Snapple",
+          image: {
+            url: "https://www.pngkit.com/png/full/326-3269315_snapple-png-download-snapple-drink.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 28,
+          name: "Juice - Snapple",
+          image: {
+            url: "https://www.decrescente.com/wp-content/uploads/2022/04/raspberry-tea-bottle-lg-5.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 29,
+          name: "RedBull",
+          image: {
+            url: "https://images.ctfassets.net/lcr8qbvxj7mh/3W2icVz4CWktIhfm5XRcYK/748774d37e23a5b9ba90cbf6f8d40734/BR_RBED_250_Single-Unit_close_cold_ORIGINAL_canwidth528px.png",
+            width: 500,
+            height: 500
+          },
+          price: 15.50,
+          category: "Drunks"
+        },
+        {
+          id: 30,
+          name: "Summer RedBull",
+          image: {
+            url: "https://tdc0wy.vteximg.com.br/arquivos/ids/159043-1000-1000/ENERGETICO-RED-BULL-LATA-250ML-MORANGO-PESSEGO.png?v=638114811371230000",
+            width: 500,
+            height: 500
+          },
+          price: 16.25,
+          category: "Drunks"
+        },
+        {
+          id: 31,
+          name: "Coconut Water - Vita",
+          image: {
+            url: "https://global.vitacoco.com/uk/wp-content/uploads/sites/3/2020/04/VC_ProductList_Template_PURE330.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.35,
+          category: "Drunks"
+        },
+        {
+          id: 32,
+          name: "Beer - Budweiser",
+          image: {
+            url: "https://d2r9epyceweg5n.cloudfront.net/stores/001/212/823/products/bud1-f0e0e6c72676dbb21516441976390790-640-0.png",
+            width: 500,
+            height: 500
+          },
+          price: 15.50,
+          category: "Drunks"
+        },
+        {
+          id: 33,
+          name: "Beer - Heineken",
+          image: {
+            url: "https://www.pngkit.com/png/full/326-3269315_snapple-png-download-snapple-drink.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 34,
+          name: "Juice - Snapple",
+          image: {
+            url: "https://www.pngkit.com/png/full/326-3269315_snapple-png-download-snapple-drink.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 35,
+          name: "Juice - Snapple",
+          image: {
+            url: "https://www.pngkit.com/png/full/326-3269315_snapple-png-download-snapple-drink.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 36,
+          name: "Juice - Snapple",
+          image: {
+            url: "https://www.pngkit.com/png/full/326-3269315_snapple-png-download-snapple-drink.png",
+            width: 500,
+            height: 500
+          },
+          price: 5.50,
+          category: "Drunks"
+        },
+        {
+          id: 37,
+          name: "Shampoo Dove",
+          image: {
+            url: "https://assets.unileversolutions.com/v1/41977176.png",
+            width: 500,
+            height: 500,
+          },
+          price: 10.45,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 38,
+          name: "Kit Shampoo + Cond Dove",
+          image: {
+            url: "https://static.paodeacucar.com/img/uploads/1/925/575925.png",
+            width: 500,
+            height: 500,
+          },
+          price: 23.45,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 39,
+          name: "Shampoo TRESemmé",
+          image: {
+            url: "https://assets.unileversolutions.com/v1/82826671.png",
+            width: 500,
+            height: 500,
+          },
+          price: 11.22,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 40,
+          name: "Shampoo Eudora",
+          image: {
+            url: "https://res.cloudinary.com/beleza-na-web/image/upload/w_1500,f_auto,fl_progressive,q_auto:eco,w_800/v1/imagens/product/E47175/c0298f8e-8f49-4133-ba53-88b86e1c83ce-eudora-siage-glow-expert-shampoo-250ml.png",
+            width: 500,
+            height: 500,
+          },
+          price: 9.45,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 41,
+          name: "Perfume Spot for her",
+          image: {
+            url: "https://hinodegroup.vtexassets.com/arquivos/ids/157203/spot-for-her-gre34799-1.jpg?v=636994004861130000",
+            width: 500,
+            height: 500,
+          },
+          price: 13.59,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 42,
+          name: "Shalimar Perf.",
+          image: {
+            url: "https://www.pngall.com/wp-content/uploads/2016/05/Perfume-Free-Download-PNG.png",
+            width: 500,
+            height: 500,
+          },
+          price: 23.99,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 43,
+          name: "Derma Soothing",
+          image: {
+            url: "https://assets.unileversolutions.com/v1/64172096.png",
+            width: 500,
+            height: 500,
+          },
+          price: 14.75,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 44,
+          name: "Caring Bath",
+          image: {
+            url: "https://assets.unileversolutions.com/v1/41977176.png",
+            width: 500,
+            height: 500,
+          },
+          price: 16.45,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 45,
+          name: "Colgate Cavity Toothpaste",
+          image: {
+            url: "https://i5.walmartimages.com/asr/c3d9c292-1272-4a83-8bc9-e84ff71ae9e4.9473a44513097a4b0902fe1ff878b729.png",
+            width: 500,
+            height: 500,
+          },
+          price: 3.25,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 46,
+          name: "Pampers new baby",
+          image: {
+            url: "https://5.imimg.com/data5/XA/DR/GLADMIN-8422687/pampers-new-baby-diapers-500x500.png",
+            width: 500,
+            height: 500,
+          },
+          price: 7.09,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 47,
+          name: "Pampers baby-dry",
+          image: {
+            url: "https://images.ctfassets.net/3shtzlb7cz90/6r8jzN4i9XqkSAZ293TSH2/132ede9406d0eba77f61ce596d26bd6f/UK_Diaper_size_chart_baby_dry_720x432_v1.png",
+            width: 500,
+            height: 500,
+          },
+          price: 8.99,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 48,
+          name: "Baby wipes",
+          image: {
+            url: "https://www.drogariasbrasil.com/products_images/original/7896018703063.png",
+            width: 500,
+            height: 500,
+          },
+          price: 2.50,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 49,
+          name: "Jolimont - Shower Gel",
+          image: {
+            url: "https://vinhosjolimont.vtexassets.com/arquivos/ids/155889/Shower-Gel-Vinicola-Jolimont--1-.png?v=638258844259130000",
+            width: 500,
+            height: 500,
+          },
+          price: 5.99,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 50,
+          name: "Jolimont - Shower Gel",
+          image: {
+            url: "https://assets.unileversolutions.com/v1/41977176.png",
+            width: 500,
+            height: 500,
+          },
+          price: 5.95,
+          category: "Hygiene and personal care"
+        },
+        {
+          id: 51,
+          name: "Kit NovAge - skin care",
+          image: {
+            url: "https://i.pinimg.com/originals/33/0d/f1/330df14c0072ce9faafddc6090592a3f.png",
+            width: 500,
+            height: 500,
+          },
+          price: 125.99,
+          category: "Hygiene and personal care"
+        },
+      ]
+    }
+    )
+  }
+}
