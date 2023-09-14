@@ -13,7 +13,7 @@ const Products = memo(({ product }) => {
         dispatch({
             type: "ADDITEM",
             payload: {
-                item,
+                ...item,
                 quantity: 1
             }
         })

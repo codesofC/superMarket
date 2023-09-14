@@ -1,17 +1,18 @@
+import { useState } from "react"
 import Image from "next/image"
 import { useSelector } from "react-redux"
 import { LiaShoppingBagSolid } from "react-icons/lia"
 import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai"
 
-const Cart = () => {
-
+const Cart = ({ setOpenCart }) => {
+    const [quantInput, setQuantInput] = useState(1)
     const cart = useSelector(state => state.cart)
 
     return (
-        <div className="h-screen w-full flex flex-col gap-4 bg-gray-200 shadow hidden">
+        <div className="h-screen w-full flex flex-col gap-4 bg-gray-200 shadow">
             <div className="relative h-full w-full">
                 <div className="relative w-full flex items-center justify-center text-lg py-3 bg-white">
-                    <span className="absolute top-1/2 left-4 translate-y-[-50%] text-sm cursor-pointer"> <AiOutlineClose /></span>
+                    <span className="absolute top-1/2 left-4 translate-y-[-50%] text-sm cursor-pointer" onClick={() => setOpenCart(false)}> <AiOutlineClose /></span>
                     <div className="flex gap-1 items-center justify-center text-sm font-semibold text-sky-950">
                         <span className="text-3xl"> <LiaShoppingBagSolid /> </span>
                         Cart
@@ -43,7 +44,7 @@ const Cart = () => {
                                         <div className="flex items-center justify-between py-1">
                                             <div className="flex items-center gap-2 text-sky-950">
                                                 <label htmlFor="quantity">Quantity</label>
-                                                <input type="number" name='quantity' />
+                                                <input type="number" name='quantity' value={quantInput} onChange={(e) => e.target.value > 0 ? setQuantInput(e.target.value) : setQuantInput(1)} className="border boder-black bg-transparent p-1 w-1/5" />
                                             </div>
                                             <span className="text-sky-950 font-bold text-md"> $20.00 </span>
                                         </div>
