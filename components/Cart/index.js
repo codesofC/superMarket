@@ -5,8 +5,8 @@ import { LiaShoppingBagSolid } from "react-icons/lia"
 import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai"
 
 const Cart = ({ setOpenCart }) => {
-    const [quantInput, setQuantInput] = useState(1)
     const cart = useSelector(state => state.cart)
+    const [quantInput, setQuantInput] = useState(1)
     const dispatch = useDispatch()
 
     const deleteItem = id => {
@@ -14,6 +14,16 @@ const Cart = ({ setOpenCart }) => {
             type: "DELETEITEM",
             payload: {
                 id
+            }
+        })
+    }
+    
+    const updateQuantityProduct = (e, id) => {
+        dispatch({
+            type: "UPDATEITEM",
+            payload: {
+                id,
+                quantity: Number(e)
             }
         })
     }
@@ -60,7 +70,7 @@ const Cart = ({ setOpenCart }) => {
                                         <div className="flex items-center justify-between py-1">
                                             <div className="flex items-center gap-2 text-sky-950">
                                                 <label htmlFor="quantity">Quantity</label>
-                                                <input type="number" name='quantity' value={quantInput} onChange={(e) => e.target.value > 0 ? setQuantInput(e.target.value) : setQuantInput(1)} className="border boder-black bg-transparent p-1 w-1/5" />
+                                                <input type="number" name='quantity' value={item.quantity > 0 && item.quantity } onChange={e => updateQuantityProduct(e.target.value, item.id)} className="border boder-black bg-transparent p-1 w-1/5" />
                                             </div>
                                             <span className="text-sky-950 font-bold text-md"> ${(item.price).toFixed(2)}</span>
                                         </div>

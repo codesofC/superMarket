@@ -1,11 +1,14 @@
 import Image from "next/image"
 import { memo, useState } from "react"
+import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
 import { FaEye } from "react-icons/fa"
 
 const Products = memo(({ product }) => {
 
     const [more, setMore] = useState(false)
+
+    const router = useRouter()
 
     const dispatch = useDispatch()
 
@@ -39,7 +42,7 @@ const Products = memo(({ product }) => {
                                 <p className="text-2xl font-bold text-green-700">${item.price}</p>
                                 <p className="text-sky-950 text-sm text-right">{item.category}</p>
                             </div>
-                            <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-0 group-hover:h-full overflow-hidden bg-black/50 z-10 opacity-0 group-hover:opacity-100 flex flex-col justify-between py-8 px-5 transition-all ease-in duration-300">
+                            <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-0 group-hover:h-full overflow-hidden bg-black/50 z-10 opacity-0 group-hover:opacity-100 flex flex-col justify-between py-8 px-5 transition-all ease-in duration-300" >
                                 <p
                                     className="text-right text-xl"
                                     title="More infos"
@@ -48,7 +51,7 @@ const Products = memo(({ product }) => {
                                 </p>
                                 <button
                                     className="text-md px-2 py-2 rounded bg-green-700 hover:bg-white hover:text-green-700 text-white font-semibold"
-                                    onClick={() => addToCart(item)}
+                                    onClick={() => router.push(`./${item.name.toLowerCase().replaceAll(" ", "_")}`)}
                                 >
                                     Add to cart
                                 </button>

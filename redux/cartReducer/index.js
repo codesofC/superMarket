@@ -10,7 +10,7 @@ export const cartReducer = (state = INITIAL_STATE, action) => {
 
             if(indexItem !== -1){
                 const updatedItem = {
-                    ...state.cart,
+                    ...state.cart[indexItem],
                     quantity: state.cart[indexItem].quantity + action.payload.quantity
                 }
 
@@ -31,8 +31,8 @@ export const cartReducer = (state = INITIAL_STATE, action) => {
         case "UPDATEITEM":
             const indexItemUpdate = state.cart.findIndex(item => item.id === action.payload.id)
             const updatedItem = {
-                ...state.cart,
-                quantity: state.cart[indexItemUpdate].quantity + action.payload.quantity
+                ...state.cart[indexItemUpdate],
+                quantity: action.payload.quantity
             }
             const newArray = [...state.cart]
             newArray.splice(indexItemUpdate, 1, updatedItem)

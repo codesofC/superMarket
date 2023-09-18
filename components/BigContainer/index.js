@@ -21,7 +21,7 @@ const BigContainer = ({ children }) => {
   
   return (
     <main className="relative overflow-hidden">
-      <dataApiContext.Provider value={dataApi}>
+      {dataApi.length > 0 && <dataApiContext.Provider value={dataApi}>
         <Navbar setOpenCart={setOpenCart} />
         {
           children
@@ -29,7 +29,7 @@ const BigContainer = ({ children }) => {
         { openCart && <div className={`fixed top-0 ${openCart ? 'right-0' : 'right-[-100%]'} w-3/5 md:w-2/5 xl:w-1/5 transition-all z-10`}>
           <Cart setOpenCart={setOpenCart} />
         </div>}
-      </dataApiContext.Provider>
+      </dataApiContext.Provider>}
     </main>
   )
 }

@@ -9,13 +9,12 @@ import Footer from '@/components/Footer'
 export default function Home({ }) {
 
   const [data, setData] = useState([])
-  const [categories, setCategories] = useState([])
   let recommended = []
   const dataApi = useContext(dataApiContext)
 
   useEffect(() => {
     setData(dataApi)
-  }, [dataApi])
+  }, [])
 
   // Fill the table recommended
   if(data){
