@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import Image from "next/image"
 import { useSelector, useDispatch } from "react-redux"
 import { LiaShoppingBagSolid } from "react-icons/lia"
@@ -8,6 +9,8 @@ const Cart = ({ setOpenCart }) => {
     const cart = useSelector(state => state.cart)
     const [quantInput, setQuantInput] = useState(1)
     const dispatch = useDispatch()
+
+    const router = useRouter()
 
     const deleteItem = id => {
         dispatch({
@@ -26,6 +29,11 @@ const Cart = ({ setOpenCart }) => {
                 quantity: Number(e)
             }
         })
+    }
+
+    const goToCart = () => {
+        router.push("/cart")
+        setOpenCart(false)
     }
 
     let totalOrder = 0
@@ -87,7 +95,10 @@ const Cart = ({ setOpenCart }) => {
                         <span className="text-md"> ${totalOrder.toFixed(2)} </span>
                     </p>
                     <div className="flex items-center justify-between gap-4 px-2 mt-5">
-                        <button className="py-2 px-5 text-sky-950 border border-black text-sm rounded"> View Cart </button>
+                        <button 
+                            className="py-2 px-5 text-sky-950 border border-black text-sm rounded"
+                            onClick={goToCart}
+                        > View Cart </button>
                         <button className="py-2 px-5 bg-black text-white text-sm rounded"> Checkout </button>
                     </div>
                 </div>

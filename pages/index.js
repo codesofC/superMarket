@@ -96,9 +96,6 @@ export default function Home({ }) {
             <Products product={drunkData} />
           </div>
         }
-
-        { /* Footer */ }
-        <Footer />
       </main>
     </>
   )

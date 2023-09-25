@@ -1,6 +1,7 @@
 import Navbar from "../Navbar"
 import Cart from "../Cart"
 import { useState, useEffect, createContext } from "react"
+import Footer from "../Footer"
 
 export const dataApiContext = createContext()
 
@@ -29,6 +30,7 @@ const BigContainer = ({ children }) => {
         { openCart && <div className={`fixed top-0 ${openCart ? 'right-0' : 'right-[-100%]'} w-3/5 md:w-2/5 xl:w-1/5 transition-all z-10`}>
           <Cart setOpenCart={setOpenCart} />
         </div>}
+        <Footer />
       </dataApiContext.Provider>}
     </main>
   )
