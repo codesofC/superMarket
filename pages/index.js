@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { dataApiContext } from '@/components/BigContainer'
 import Brand from '@/components/Brand'
 import Products from '@/components/Products'
-import Footer from '@/components/Footer'
+import FlottingCart from '@/components/flottingCart'
 
 
 export default function Home({ }) {

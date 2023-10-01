@@ -27,8 +27,8 @@ const Products = memo(({ product, isDescription }) => {
             <div className={`relative w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center items-center px-4 md:px-10 py-3 gap-x-4 gap-y-8 sm:gap-x-6 lg:gap-x-8 xl:gap-x-10 ${more || isDescription ? 'h-auto' : 'h-[50rem] lg:h-[30rem]'} overflow-y-hidden transition-all`}>
                 {
                     product && product.map(item => (
-                        <div key={item.id} className="w-full h-80 relative flex flex-col justify-end items-center cursor-pointer group shadow-md hover:shadow-xl transition-shadow">
-                            <div className="w-full h-48 absolute left-50 top-4 flex items-center justify-center">
+                        <div key={item.id} className="w-full h-80 relative flex flex-col justify-end items-center cursor-pointer group border border-gray-100 hover:shadow-xl transition-shadow py-2">
+                            <div className="w-full h-48 absolute left-50 top-4 flex items-center justify-center px-4 pb-5">
                                 <Image
                                     src={item.image.url}
                                     width={item.image.width}
@@ -37,21 +37,14 @@ const Products = memo(({ product, isDescription }) => {
                                     className="w-full h-full object-contain"
                                 />
                             </div>
-                            <div className="w-full flex flex-col gap-2 px-2 pb-3 pt-12 bg-gray-100 rounded-tl-xl rounded-tr-xl">
+                            <div className="w-full flex flex-col items-center gap-2 px-2 pb-3 pt-12 rounded-tl-xl rounded-tr-xl">
                                 <p className="text-sky-950 text-md md:text-xl font-semibold">{item.name}</p>
-                                <p className="text-2xl font-bold text-green-700">${item.price}</p>
-                                <p className="text-sky-950 text-sm text-right">{item.category}</p>
+                                <p className="text-xl font-bold text-green-700">${item.price}</p>
                             </div>
-                            <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-0 group-hover:h-full overflow-hidden bg-black/50 z-10 opacity-0 group-hover:opacity-100 flex flex-col justify-between py-8 px-5 transition-all ease-in duration-300" >
-                                <p
-                                    className="text-right text-xl"
-                                    title="More infos"
-                                >
-                                    <FaEye className="text-gray-900 hover:text-orange-700" />
-                                </p>
+                            <div className="hidden group-hover:flex overflow-hidden z-10 flex flex-col justify-center py-2 px-5 transition-all ease-in duration-300" >
                                 <button
-                                    className="text-md px-2 py-2 rounded bg-green-700 hover:bg-white hover:text-green-700 text-white font-semibold"
-                                    onClick={() => router.push(`./${item.name.toLowerCase().replaceAll(" " || "/", "")}`)}
+                                    className="text-md px-4 py-1 rounded hover:bg-green-700 bg-white text-green-700 border border-green-700 hover:text-white font-semibold"
+                                    onClick={() => addToCart(item)}
                                 >
                                     Add to cart
                                 </button>

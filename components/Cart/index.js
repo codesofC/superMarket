@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useRouter } from "next/router"
 import Image from "next/image"
 import { useSelector, useDispatch } from "react-redux"
@@ -6,8 +5,8 @@ import { LiaShoppingBagSolid } from "react-icons/lia"
 import { AiOutlineClose, AiOutlineDelete } from "react-icons/ai"
 
 const Cart = ({ setOpenCart }) => {
+    
     const cart = useSelector(state => state.cart)
-    const [quantInput, setQuantInput] = useState(1)
     const dispatch = useDispatch()
 
     const router = useRouter()
@@ -33,6 +32,11 @@ const Cart = ({ setOpenCart }) => {
 
     const goToCart = () => {
         router.push("/cart")
+        setOpenCart(false)
+    }
+    
+    const goToCheckout = () => {
+        router.push("/checkout")
         setOpenCart(false)
     }
 
@@ -99,7 +103,10 @@ const Cart = ({ setOpenCart }) => {
                             className="py-2 px-5 text-sky-950 border border-black text-sm rounded"
                             onClick={goToCart}
                         > View Cart </button>
-                        <button className="py-2 px-5 bg-black text-white text-sm rounded"> Checkout </button>
+                        <button 
+                            className="py-2 px-5 bg-black text-white text-sm rounded"
+                            onClick={goToCheckout}
+                        > Checkout </button>
                     </div>
                 </div>
             </div>
