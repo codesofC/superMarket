@@ -1,14 +1,37 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useState,  useEffect } from "react"
+import { useFirebase } from "../../Firebase/useFirebase"
+import { useDataContext } from "@/components/BigContainer/useDataContext"
+import { setDoc } from "firebase/firestore"
+import { useSelector } from "react-redux"
+import { useRouter } from "next/router"
 
 const SignUp = () => {
 
-    const [form, setForm] = useState({
+    const initialData = {
         email: "",
         username: "",
         password: "",
-        confirmPassword: ""
-    })
+        confirmPassword: "",
+        errorMessage: ""
+    }
+
+    const [form, setForm] = useState(initialData)
+    const [error, setError] = useState("")
+
+    const { setIsLoading } = useDataContext()
+    const { signup, user, setUid, setUserConnect } = useFirebase()
+
+
+    const cart = useSelector(state => state.cart)
+    const router = useRouter()
+
+    let timeOut
+
+    useEffect(() => {
+        
+        return clearTimeout(timeOut)
+    }, [timeOut])
 
     const updateForm = e => {
         setForm({
@@ -17,17 +40,66 @@ const SignUp = () => {
         })
     }
 
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        if(form.password !== form.confirmPassword){
+            setForm({...form, errorMessage: "Passwords incompatibles!"})
+            return
+        }
+
+        setIsLoading(true)
+        signup(form.email, form.password)
+            .then(authUser => {
+                setUid(authUser.user.uid)
+                
+                setDoc(user(authUser.user.uid), {
+                    email: form.email,
+                    username: form.username,
+                    password: form.password,
+                    cart
+                })
+            })
+            .then(() => {
+                setUserConnect(true)
+                timeOut  = setTimeout(() => {
+                    setIsLoading(false)
+                    router.push("/")
+                }, 1500)
+            })
+            .catch( err => {
+                setError(err.message)
+                setIsLoading(false)
+            })
+
+    }
+
+    const buttonSubmit = form.email && 
+                        form.username && 
+                        form.password.length > 5 && 
+                        form.confirmPassword.length > 5 ? (
+                            <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                        ) : (
+                            <button disabled className="bg-gray-200 text-gray-400 px-4 py-2 rounded">Submit</button>
+                        )
+    const errorMessage =  error !== ""  && (
+        <span className="text-sm text-red-500"> { error } </span>
+    )
+
     return (
         <div className="px-5 flex flex-col gap-5 px-5 md:px-10 lg:px-18 xl:px-32 py-5">
             <h1 className='text-center text-xl font-bold text-lg lg:text-xl xl:text-2xl'>My Account</h1>
             <p className='my-5'> <Link href="/" className="text-gray-500">Home</Link> / SignUp </p>
-            <form action="" className="flex flex-col gap-8 justify-center md:w-4/5 lg:w-2/5">
+            <form  method="POST" onSubmit={handleSubmit} className="flex flex-col gap-8 justify-center md:w-4/5 lg:w-2/5">
+                
+                {  errorMessage }
+
                 <div className="flex flex-col gap-2">
                     <label htmlFor="email">Email adress <span className="text-red-400 font-bold">*</span></label>
                     <input
                         type="email"
                         id='email'
-                        name="user"
+                        name="email"
                         value={form.email}
                         onChange={e => updateForm(e)}
                         required
@@ -39,7 +111,7 @@ const SignUp = () => {
                     <input
                         type="text"
                         id='username'
-                        name="user"
+                        name="username"
                         value={form.username}
                         onChange={e => updateForm(e)}
                         required
@@ -54,6 +126,7 @@ const SignUp = () => {
                         id="password"
                         value={form.password}
                         onChange={e => updateForm(e)}
+                        onFocus={() => setForm({ ...form, errorMessage: ""})}
                         required
                         className="w-full border py-3 px-2 rounded focus:outline-none"
                     />
@@ -62,16 +135,18 @@ const SignUp = () => {
                     <label htmlFor="confirmPassword"> Confirm Password <span className="text-red-400 font-bold">*</span></label>
                     <input
                         type="password"
-                        name="password"
+                        name="confirmPassword"
                         id="confirmPassword"
                         value={form.confirmPassword}
                         onChange={e => updateForm(e)}
+                        onFocus={() => setForm({ ...form, errorMessage: ""})}
                         required
                         className="w-full border py-3 px-2 rounded focus:outline-none"
                     />
                 </div>
+                <span className="text-sm text-red-600"> { form.errorMessage } </span>
                 <div className="flex gap-4 items-center">
-                    <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
+                    { buttonSubmit }
                 </div>
                 <div className="flex flex-col gap-3 text-sky-950">
                     <p>You have account? <Link href="/login" className="underline hover:text-green-500">Login</Link> </p>

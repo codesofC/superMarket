@@ -3,7 +3,7 @@ import Cart from "../Cart"
 import FlottingCart from "../flottingCart"
 import { useState, useEffect, createContext } from "react"
 import Footer from "../Footer"
-import Link from "next/link"
+import Loading from "../Loading"
 
 export const dataApiContext = createContext()
 
@@ -11,6 +11,7 @@ const BigContainer = ({ children }) => {
 
   const [dataApi, setDataApi] = useState([])
   const [openCart, setOpenCart] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     fetchData()
@@ -25,7 +26,10 @@ const BigContainer = ({ children }) => {
   return (
     <main className="relative overflow-hidden" id="top">
       
-      {dataApi.length > 0 && <dataApiContext.Provider value={dataApi}>
+      {dataApi.length > 0 && <dataApiContext.Provider value={{dataApi, isLoading, setIsLoading}}>
+
+        { isLoading && <Loading />}
+
         <Navbar setOpenCart={setOpenCart} />
         {
           children

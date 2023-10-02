@@ -1,16 +1,15 @@
 import Head from 'next/head'
-import { useState, useEffect, useContext } from 'react'
-import { dataApiContext } from '@/components/BigContainer'
+import { useState, useEffect } from 'react'
+import { useDataContext } from '@/components/BigContainer/useDataContext'
 import Brand from '@/components/Brand'
 import Products from '@/components/Products'
-import FlottingCart from '@/components/flottingCart'
 
 
 export default function Home({ }) {
 
   const [data, setData] = useState([])
   let recommended = []
-  const dataApi = useContext(dataApiContext)
+  const { dataApi } = useDataContext()
 
   useEffect(() => {
     setData(dataApi)

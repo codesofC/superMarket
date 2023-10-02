@@ -42,7 +42,7 @@ const FlottingCart = ({ setOpenCart }) => {
             className="flex items-center justify-center p-3 relative bg-white rounded shadow-xl border cursor-pointer"
             onClick={() => setOpenCart(true)}
         >
-            <LiaShoppingBagSolid className="text-4xl" />
+            <LiaShoppingBagSolid className="text-4xl text-black" />
             <span 
                 className="absolute left-[-1rem] top-[-1rem] bg-black py-2 px-4 rounded-full text-white text-md"
             > { totalItem } </span>

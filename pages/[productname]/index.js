@@ -1,18 +1,20 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { dataApiContext } from "@/components/BigContainer";
+import {useDataContext} from "@/components/BigContainer/useDataContext";
 import { useDispatch } from "react-redux";
 import Products from "@/components/Products";
 import { AiOutlineStar, AiFillStar } from "react-icons/ai"
 
 
-const ProductName = ({ data }) => {
+const ProductName = ({ data}) => {
   const [description, setDescription] = useState(false)
   const [recommended, setRecommended] = useState([])
   const [quantity, setQuantity] = useState(1)
   let rating = [false, false, false, false, false]
-  const dataApi = useContext(dataApiContext)
+
+  //Use my custom hook for dataApiContext
+  const { dataApi } = useDataContext()
 
   const dispatch = useDispatch()
 
@@ -68,16 +70,17 @@ return (
   <div className="flex flex-col gap-5 px-3 py-4">
     <p> <Link href="/" className="text-gray-500">Home</Link> / <Link href="" className="text-gray-500">Products</Link> / {data.name} </p>
     <div className="w-full flex flex-col md:flex-row">
-      <div className="w-full md:w-1/2 h-[60vh] flex items-center justify-center">
+      <div className="w-full md:w-1/2 h-[50vh] flex items-center justify-center py-16">
         <Image
           src={data.image.url}
           height={data.image.height}
           width={data.image.width}
+          alt="Product Picture"
           className="w-full h-full object-contain"
         />
       </div>
       <div className="flex flex-col gap-4 w-full md:w-1/2">
-        <h1 className="text-4xl font-semibold text-sky-950">{data.name}</h1>
+        <h1 className="text-3xl font-semibold text-sky-950">{data.name}</h1>
         <h3 className="text-2xl font-semibold text-sky-950">$ {data.price}</h3>
         <p className="text-sky-950 text-lg">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi nisi labore iusto
@@ -91,7 +94,7 @@ return (
           <div className="flex items-center justify-center gap-4 rounded px-3 py-1 border">
             <button 
               className="py-1 px-3 rounded-full hover:bg-gray-200"
-              onClick={() => !(quantity > 0 ) && setQuantity(quantity - 1)}
+              onClick={() => (quantity > 1 ) && setQuantity(quantity - 1)}
             >-</button>
             <input
               type="text"
@@ -176,7 +179,7 @@ return (
     </div>
     <div className="flex flex-col gap-4 items-center mt-5">
       <h1 className="font-bold text-2xl"> You may also like... </h1>
-      <div>
+      <div className="w-full">
               <Products product={recommended} isDescription={true} />
       </div>
     </div>
@@ -190,7 +193,8 @@ export default ProductName
 export async function getStaticProps(context) {
   const productname = context.params.productname
   const data = await import("../api/dataApi.json")
-  const product = data.products.find(item => item.name.toLowerCase().replaceAll(" " || "/", "") === productname)
+
+  const product = data.products.find(item => item.name.toLowerCase().replaceAll(" ", "").replaceAll("/", "-") === productname)
 
   if (!product) {
     return {
@@ -207,10 +211,10 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
 
-  const data = await import("../api/dataApi.json")
+  const dataApi = await import("../api/dataApi.json")
 
-  const paths = data.products.map(item => ({
-    params: { productname: item.name.toLowerCase().replaceAll(" " || "/", "") }
+  const paths = dataApi.products.map(item => ({
+    params: { productname: item.name.toLowerCase().replaceAll(" ", "").replaceAll("/", "-") }
   }))
 
   return {

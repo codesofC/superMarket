@@ -2,7 +2,6 @@ import Image from "next/image"
 import { memo, useState } from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
-import { FaEye } from "react-icons/fa"
 
 const Products = memo(({ product, isDescription }) => {
 
@@ -12,7 +11,7 @@ const Products = memo(({ product, isDescription }) => {
 
     const dispatch = useDispatch()
 
-    const addToCart = item => {
+    const addToCart = (e, item) => {
         dispatch({
             type: "ADDITEM",
             payload: {
@@ -20,6 +19,16 @@ const Products = memo(({ product, isDescription }) => {
                 quantity: 1
             }
         })
+
+        e.target.innerHTML = "Added successfully"
+        setTimeout(() => {
+            e.target.innerHTML = "Add to cart"
+        }, 500)
+
+    }
+
+    const goToItem = arg => {
+        router.push(`/${arg.toLowerCase().replaceAll(" ", "").replaceAll("/", "-")}`)
     }
 
     return (
@@ -28,7 +37,10 @@ const Products = memo(({ product, isDescription }) => {
                 {
                     product && product.map(item => (
                         <div key={item.id} className="w-full h-80 relative flex flex-col justify-end items-center cursor-pointer group border border-gray-100 hover:shadow-xl transition-shadow py-2">
-                            <div className="w-full h-48 absolute left-50 top-4 flex items-center justify-center px-4 pb-5">
+                            <div 
+                                className="w-full h-40 sm:h-48 absolute left-50 top-4 flex items-center justify-center px-4 pb-5"
+                                onClick={() => goToItem(item.name)}
+                            >
                                 <Image
                                     src={item.image.url}
                                     width={item.image.width}
@@ -37,14 +49,16 @@ const Products = memo(({ product, isDescription }) => {
                                     className="w-full h-full object-contain"
                                 />
                             </div>
-                            <div className="w-full flex flex-col items-center gap-2 px-2 pb-3 pt-12 rounded-tl-xl rounded-tr-xl">
+                            <div 
+                                className="w-full flex flex-col items-center gap-2 px-2 pb-3 pt-12 rounded-tl-xl rounded-tr-xl"
+                            >
                                 <p className="text-sky-950 text-md md:text-xl font-semibold">{item.name}</p>
                                 <p className="text-xl font-bold text-green-700">${item.price}</p>
                             </div>
-                            <div className="hidden group-hover:flex overflow-hidden z-10 flex flex-col justify-center py-2 px-5 transition-all ease-in duration-300" >
+                            <div className="flex lg:hidden group-hover:flex overflow-hidden z-10 flex flex-col justify-center py-2 px-5 transition-all ease-in duration-300" >
                                 <button
-                                    className="text-md px-4 py-1 rounded hover:bg-green-700 bg-white text-green-700 border border-green-700 hover:text-white font-semibold"
-                                    onClick={() => addToCart(item)}
+                                    className="text-sm md:text-md px-4 py-1 rounded hover:bg-green-700 bg-white text-green-700 border border-green-700 hover:text-white font-semibold"
+                                    onClick={(e) => addToCart(e, item)}
                                 >
                                     Add to cart
                                 </button>

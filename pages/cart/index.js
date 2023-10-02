@@ -52,7 +52,7 @@ const Cart = () => {
                                 cart.map(item => (
                                     <div className='flex gap-5 w-full border-b py-9'>
                                         <Link href={`/${item.name.toLowerCase().replaceAll(" ", "")}`} className="flex items-center w-3/12 xl:w-2/12">
-                                            <div className='flex items-center justify-center w-full'>
+                                            <div className='flex items-center justify-center w-full h-[10vh]'>
                                                 <Image
                                                     src={item.image.url}
                                                     width={item.image.width}

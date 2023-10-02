@@ -40,6 +40,11 @@ const Cart = ({ setOpenCart }) => {
         setOpenCart(false)
     }
 
+    const backToShop = () => {
+        router("/")
+        setOpenCart(false)
+    }
+
     let totalOrder = 0
 
     for(const item of cart){
@@ -59,10 +64,10 @@ const Cart = ({ setOpenCart }) => {
                 {
                     cart.length < 1 ? <div className="flex flex-col items-center justify-center gap-4 pt-5">
                         <p className="text-md font-semibold"> Your Cart is Empty </p>
-                        <button className="py-2 px-4 bg-black text-white"> Back To Shop </button>
+                        <button className="py-2 px-4 bg-black text-white" onClick={backToShop}> Back To Shop </button>
                     </div>
                         :
-                        <div className="w-full flex flex-col gap-4 p-3 overflow-y-auto">
+                        <div className="w-full flex flex-col gap-4 p-3">
                             {
                                 cart.map(item => (
                                     <div key={item.id} className="flex flex-col p-1 gap-4 bg-white">
