@@ -9,14 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^2.1.7",
     "axios": "^1.5.1",
     "firebase": "^10.4.0",
-    "next": "13.4.12",
+    "next": "^13.4.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.11.0",
     "react-redux": "^8.1.2",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "stripe": "^13.9.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.15",

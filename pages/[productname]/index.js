@@ -75,6 +75,7 @@ return (
           src={data.image.url}
           height={data.image.height}
           width={data.image.width}
+          priority
           alt="Product Picture"
           className="w-full h-full object-contain"
         />
