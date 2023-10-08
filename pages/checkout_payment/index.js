@@ -16,7 +16,10 @@ const CheckoutPayment = () => {
 
     const handlePage = e => {
         e.preventDefault()
-        router.push("/")
+        e.target.innerHTML = "Payment Successs"
+        setTimeout(()=> {
+            router.push("/")
+        }, 2000)
     }
 
     const handleChange = e => {
@@ -111,6 +114,7 @@ const CheckoutPayment = () => {
                             <button
                                 type="submit"
                                 className="text-white bg-green-700 px-4 py-2 rounded w-full"
+                                onClick={handlePage}
                             >
                                 Pay
                             </button>

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import axios from "axios"
+import { useRouter } from "next/router"
 
 
 const Checkout = () => {
@@ -23,6 +24,8 @@ const Checkout = () => {
     const [couponDisplay, setCouponDisplay] = useState(false)
 
     const cart = useSelector(state => state.cart)
+
+    const router = useRouter()
 
     useEffect(() => {
         findCountries()
@@ -286,7 +289,7 @@ const Checkout = () => {
                             you require assistance or wish to make alternate arrangements.
                         </p>
                         <div className="flex items-center justify-center px-3 md:px-4 lg:px-6 py-5 border-t">
-                            <button className="bg-green-600 text-white py-3 px-4 rounded text-center font-seemibold w-full"> Place Order </button>
+                            <button className="bg-green-600 text-white py-3 px-4 rounded text-center font-semibold w-full" onClick={() => router.push("/checkout_payment")}> Place Order </button>
                         </div>
                     </div>
                 </div>
