@@ -5,9 +5,9 @@ import { FaPlane, FaCoffee, FaDollarSign, FaUmbrella } from "react-icons/fa"
 const Brand = () => {
   return (
     <div className='relative w-full h-auto md:h-96 relative flex flex-col md:flex-row bg-gray-50 px-5 md:px-10 lg:px-18 xl:px-32 py-6'>
-      <div className="w-full md:text-left md:w-1/2 h-full flex flex-col items-center md:items-start gap-5 md:gap-8 xl:gap-10">
+      <div className="w-full md:text-left md:w-1/2 h-full flex flex-col items-center justify-center md:items-start gap-5 md:gap-8 xl:gap-10">
         <h1 className="text-4xl md:text-5xl xl:text-6xl text-sky-950 font-bold"> Daily <span className="text-orange-400"> Shaws </span> </h1>
-        <h1 className="text-5xl md:text-6xl xl:text-6xl xxl:text-7xl text-sky-950 font-bold"> Fresh and Healthy </h1>
+        <h1 className="text-3xl sm:text-5xl md:text-6xl xl:text-6xl xxl:text-7xl text-sky-950 font-bold"> Fresh and Healthy </h1>
         <h3 className="text-lg text-sky-950 font-bold"> Direct to your home </h3>
         <button className="bg-orange-400 text-white px-5 py-3 text-md lg:text-lg font-bold rounded"> Shop now </button>
       </div>

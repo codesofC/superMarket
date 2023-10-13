@@ -5,6 +5,11 @@ const INITIAL_STATE = {
 
 export const cartReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
+        case 'INITIALIZEDATABASE':
+
+            return {
+                cart: action.payload
+            }
         case 'ADDITEM':
             const indexItem = state.cart.findIndex(obj => obj.id === action.payload.id)
 
@@ -45,6 +50,11 @@ export const cartReducer = (state = INITIAL_STATE, action) => {
 
             return {
                 cart: newArr
+            }
+        case "RESETCART":
+
+            return {
+                cart: []
             }
         default: return {
             cart: state.cart

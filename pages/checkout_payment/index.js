@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { imgCard } from "@/pages/api/imgCard";
+import { useDataContext } from "@/components/BigContainer/useDataContext";
+import { useFirebase } from "@/Firebase/useFirebase";
 
 const CheckoutPayment = () => {
 
@@ -12,21 +16,92 @@ const CheckoutPayment = () => {
         cvcCard: ""
     })
 
+    const [errorMessage, setErrorMessage] = useState("")
+
     const router = useRouter()
 
-    const handlePage = e => {
+    const cart = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+
+    const { setIsLoading } = useDataContext()
+    const { userConnect } = useFirebase()
+    let timeOut
+
+    if (!userConnect) {
+        router.push("/login")
+
+        return
+    }
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        timeOut = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000)
+
+        return () => {
+            clearTimeout(timeOut)
+        }
+
+    }, [])
+
+    useEffect(() => {
+        setErrorMessage("")
+    }, [card])
+
+    const handleSubmit = e => {
         e.preventDefault()
-        e.target.innerHTML = "Payment Successs"
-        setTimeout(()=> {
-            router.push("/")
-        }, 2000)
+        if (card.numberCard.length === 16 && card.dateCard.length === 5 && card.cvcCard > 2) {
+
+            dispatch({
+                type: "RESETCART"
+            })
+
+            timeOut = setTimeout(()=> {
+            router.push("/result_payment")
+            }, 1000)
+        } else {
+            setErrorMessage("An error among the inserted data card!")
+        }
+
     }
 
     const handleChange = e => {
-        setCard({
-            ...card,
+
+        let re = null
+        if (e.target.name === "numberCard") {
+            re = /^[0-9\b]+$/
+        } else if (e.target.name === "dateCard") {
+            re = /^(0[1-9]{0,1}|1[0-2]{0,1})\/?([2-9]{0,2})$/
+        } else if (e.target.name === "cvcCard") {
+            re = /^[0-9]{0,4}$/
+        }
+
+        if (e.target.name !== "nameCard") {
+            if (e.target.value === '' || re.test(e.target.value)) {
+                setCard(prevState => ({
+                    ...prevState,
+                    [e.target.name]: e.target.value
+                }))
+                e.target.style.border = "1px solid gray"
+            } else {
+                e.target.style.border = "1px solid red"
+            }
+
+            return
+        }
+
+        setCard(prevState => ({
+            ...prevState,
             [e.target.name]: e.target.value
-        })
+        }))
+    }
+
+    let totalOrder = 0
+
+    for (const item of cart) {
+        totalOrder += item.price * item.quantity
     }
 
 
@@ -35,7 +110,7 @@ const CheckoutPayment = () => {
             className="flex justify-center w-full my-12"
         >
             <section
-                className="w-full sm:w-4/5 xl:w-1/4 flex flex-col gap-3 items-center justify-center"
+                className="w-full sm:w-4/5 md:1/2 lg:w-3/5 xl:w-1/4 flex flex-col gap-3 items-center justify-center"
                 style={{ height: "auto" }}
             >
                 <div
@@ -60,8 +135,8 @@ const CheckoutPayment = () => {
                             </div>
                         ))}
                     </div>
-
-                    <form action="" className="flex flex-col gap-6">
+                    <span className="text-center my-3 text-red-500"> {errorMessage} </span>
+                    <form action="" className="flex flex-col gap-6" onSubmit={handleSubmit}>
 
                         <div>
                             <input
@@ -72,6 +147,7 @@ const CheckoutPayment = () => {
                                 value={card.nameCard}
                                 onChange={handleChange}
                                 className="px-4 py-2 w-full focus:outline-none border rounded"
+                                required
                             />
                         </div>
                         <div className="flex items-center justify-center w-full">
@@ -81,29 +157,32 @@ const CheckoutPayment = () => {
                                 placeholder="Card Number"
                                 value={card.numberCard}
                                 onChange={handleChange}
-                                pattern="[0-9]{16}"
+                                maxLength="16"
                                 className="w-full focus:outline-none px-4 py-2 border rounded"
+                                required
                             />
                         </div>
-                        <div className="flex items-center justify-between
+                        <div className="flex items-center justify-between flex-wrap gap-3
                         ">
                             <input
                                 type="text"
                                 name="dateCard"
                                 placeholder="MM/YY"
-                                pattern="[0-9]{2}/[0-9]{2}"
                                 value={card.dateCard}
                                 onChange={handleChange}
+                                maxLength="5"
                                 className="px-4 py-2 focus:outline-none flex border rounded"
+                                required
                             />
                             <input
                                 type="text"
                                 name="cvcCard"
                                 placeholder="CVC"
-                                pattern="[0-9]{3}"
                                 value={card.cvcCard}
                                 onChange={handleChange}
+                                maxLength="4"
                                 className="px-4 py-2 focus:outline-none flex border rounded"
+                                required
                             />
                         </div>
                         <div>
@@ -114,9 +193,8 @@ const CheckoutPayment = () => {
                             <button
                                 type="submit"
                                 className="text-white bg-green-700 px-4 py-2 rounded w-full"
-                                onClick={handlePage}
                             >
-                                Pay
+                                Pay amount ( ${totalOrder.toFixed(2)} )
                             </button>
                         </div>
                     </form>

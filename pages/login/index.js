@@ -13,7 +13,7 @@ const Login = () => {
   const [error, setError] = useState("")
 
   const { setIsLoading } = useDataContext()
-  const { signin, setUserConnect, setUid, userConnect } = useFirebase()
+  const { signin, setUserConnect, setUid } = useFirebase()
 
   const router = useRouter()
   let timeOut;
@@ -23,7 +23,7 @@ const Login = () => {
 
     setError("")
 
-    return clearTimeout(timeOut)
+    return () => clearTimeout(timeOut)
   }, [form, timeOut])
 
   const updateForm = e => {

@@ -3,35 +3,37 @@ import { useState, useEffect } from 'react'
 import { useDataContext } from '@/components/BigContainer/useDataContext'
 import Brand from '@/components/Brand'
 import Products from '@/components/Products'
+import { getDoc } from 'firebase/firestore'
+import { useFirebase } from '@/Firebase/useFirebase'
+import { BiSolidDrink } from "react-icons/bi"
+import { PiBathtubBold } from "react-icons/pi"
+import { MdPets, MdOutlineLocalPharmacy } from "react-icons/md"
+import Link from 'next/link'
 
 
 export default function Home({ }) {
 
   const [data, setData] = useState([])
-  let recommended = []
-  const { dataApi } = useDataContext()
+  const { dataApi, setDataUserConnected } = useDataContext()
+  const { userConnect, uid, user } = useFirebase()
 
   useEffect(() => {
     setData(dataApi)
   }, [])
 
-  // Fill the table recommended
-  if(data){
-    for (let i = 0; i < 10; i++) {
-      let index
-      index = Math.floor(Math.random() * data.length)
-      if(recommended.length >= 1){
-        if(recommended[i - 1] !== undefined){
-          let finding = recommended.findIndex(obj => obj.id === index)
-          while(finding !== -1){
-            index = Math.floor(Math.random() * data.length)
-            finding = recommended.findIndex(obj => obj.id === index)
+  useEffect(() => {
+    if (userConnect) {
+      // Update state data of the user connected
+      getDoc(user(uid))
+        .then(doc => {
+          if (doc.exists()) {
+            setDataUserConnected(doc.data())
           }
-        }
-      }
-      recommended.push(data[index])
+        })
     }
-  }
+  }, [userConnect])
+
+
 
   //Packaged products
   const PackagedProductsData = data && data.filter(item => item.category === 'Packaged products')
@@ -50,17 +52,42 @@ export default function Home({ }) {
       </Head>
       <main>
         <Brand />
-        {
-          !(recommended[0] == undefined) && <div className='mt-72 md:mt-40 xl:mt-36'>
-            <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
-              <h1>Recommended</h1>
-              <p className='w-20 h-1 bg-green-700'></p>
-            </div>
-            <Products product={recommended} />
+
+        <div className='mt-72 md:mt-60 lg:mt-40'>
+          <div className='flex gap-4 md:gap-6 lg:gap-8 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
+            <h1>Most Popular</h1>
+            <p className='w-20 h-1 bg-green-700'></p>
           </div>
-        }
+          <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 xl:gap-12 justify-center items-center px-5 lg:px-56'>
+            <Link href={"/category/drunks"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+              <span className='text-6xl text-blue-400'> <BiSolidDrink /> </span>
+              <p className='text-sm text-black'>
+                Drinks, Alcohol, Energy
+              </p>
+            </Link>
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+              <span className='text-6xl text-blue-400'> <PiBathtubBold /> </span>
+              <p className='text-sm text-black'>
+                Hygiene, Personal care
+              </p>
+            </Link>
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+              <span className='text-6xl text-blue-400'> <MdPets /> </span>
+              <p className='text-sm text-black'>
+                Pets, Domestic, Dog, Cat
+              </p>
+            </Link>
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+              <span className='text-6xl text-blue-400'> <MdOutlineLocalPharmacy /> </span>
+              <p className='text-sm text-black'>
+                Health, Pharmacy
+              </p>
+            </Link>
+          </div>
+        </div>
+
         {
-          <div className='mt-28'>
+          <div className='mt-28 md:mt-40 xl:mt-36'>
             <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
               <h1>Fruits and vegetables</h1>
               <p className='w-20 h-1 bg-green-700'></p>
@@ -77,24 +104,7 @@ export default function Home({ }) {
             <Products product={PackagedProductsData} />
           </div>
         }
-        {
-          <div className='mt-28'>
-            <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
-              <h1>Hygiene and personal care</h1>
-              <p className='w-20 h-1 bg-green-700'></p>
-            </div>
-            <Products product={higieneCareData} />
-          </div>
-        }
-        {
-          <div className='mt-28'>
-            <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
-              <h1>Drunks</h1>
-              <p className='w-20 h-1 bg-green-700'></p>
-            </div>
-            <Products product={drunkData} />
-          </div>
-        }
+        
       </main>
     </>
   )

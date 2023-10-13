@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
+import { useDataContext } from '@/components/BigContainer/useDataContext'
 import { AiOutlineDelete } from "react-icons/ai"
+import { useFirebase } from '@/Firebase/useFirebase'
 
 const Cart = () => {
 
@@ -10,6 +13,22 @@ const Cart = () => {
     const dispatch = useDispatch()
 
     const router = useRouter()
+
+    const { setIsLoading } = useDataContext()
+    const { userConnect } = useFirebase()
+    let timeOut;
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        timeOut = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000)
+
+        return () => {
+            clearTimeout(timeOut)
+        }
+    }, [])
 
     const deleteItem = id => {
         dispatch({
@@ -30,6 +49,17 @@ const Cart = () => {
         })
     }
 
+    const goToCheckout = () => {
+        if(userConnect){
+            router.push("/checkout")
+        }else{
+            router.push("/login")
+        }
+    }
+    const backToShop = () => {
+        router.push("/")
+    }
+
     let totalOrder = 0
 
     for(const item of cart){
@@ -42,15 +72,16 @@ const Cart = () => {
             <p className='my-5'> <Link href="/" className="text-gray-500">Home</Link> / Cart </p>
             {
                 cart.length === 0 ?
-                    <div>
+                    <div className='flex flex-col items-center justify-center gap-4 pt-5'>
                         Your cart is empty
+                        <button className="py-2 px-4 bg-black text-white" onClick={backToShop}> Back To Shop </button>
                     </div>
                     :
                     <div className='flex flex-col md:flex-row gap-8 px-5 lg:justify-between'>
                         <div className='flex flex-col gap-2 md:w-3/5 lg:w-2/5 xl:w-3/5'>
                             {
                                 cart.map(item => (
-                                    <div className='flex gap-5 w-full border-b py-9'>
+                                    <div className='flex gap-5 w-full border-b py-9' key={item.id}>
                                         <Link href={`/${item.name.toLowerCase().replaceAll(" ", "")}`} className="flex items-center w-3/12 xl:w-2/12">
                                             <div className='flex items-center justify-center w-full h-[10vh]'>
                                                 <Image
@@ -58,6 +89,7 @@ const Cart = () => {
                                                     width={item.image.width}
                                                     height={item.image.height}
                                                     className="w-full h-full object-contain"
+                                                    alt="Product picture"
                                                 />
                                             </div>
                                         </Link>
@@ -80,8 +112,8 @@ const Cart = () => {
                                     </div>
                                 ))
                             }
-                            <div className='flex items-center justify-center mt-4'>
-                                <div className='flex items-center gap-4'>
+                            <div className='flex items-center justify-center mt-4 w-full'>
+                                <div className='flex flex-wrap items-center justify-center gap-4'>
                                     <span className='font-semibold'>Coupon: </span>
                                     <input type="text" placeholder='Coupon code' className='p-2 border focus:outline-none' />
                                     <button className='px-4 py-2 bg-green-500 text-white rounded'>Apply coupon</button>
@@ -93,16 +125,16 @@ const Cart = () => {
                             <div className='flex flex-col gap-12 text-xl font-semibold px-3'>
                                 <p className='flex justify-between items-center'>
                                     <span>Subtotal</span>
-                                    <span>$ {totalOrder}</span>
+                                    <span>$ {totalOrder.toFixed(2)}</span>
                                 </p>
                                 <p className='flex justify-between items-center'>
                                     <span>Total</span>
-                                    <span> $ {totalOrder} </span>
+                                    <span> $ {totalOrder.toFixed(2)} </span>
                                 </p>
                             </div>
                             <button 
                                 className='px-4 py-2 bg-green-500 text-white rounded'
-                                onClick={() => router.push("/checkout")}
+                                onClick={goToCheckout}
                             > Proceed to checkout </button>
                         </div>
                     </div>

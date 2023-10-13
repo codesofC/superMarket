@@ -1,8 +1,10 @@
-import Link from "next/link"
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { useSelector } from "react-redux"
 import axios from "axios"
 import { useRouter } from "next/router"
+import { useDataContext } from "@/components/BigContainer/useDataContext"
+import { useFirebase } from "@/Firebase/useFirebase"
 
 
 const Checkout = () => {
@@ -27,8 +29,35 @@ const Checkout = () => {
 
     const router = useRouter()
 
+    const { setIsLoading, dataUserConnected } = useDataContext()
+    const { userConnect } = useFirebase()
+    let timeOut
+
+    if(!userConnect){
+        router.push("/login")
+
+        return
+    }
+
     useEffect(() => {
+        setIsLoading(true)
         findCountries()
+        setForm(prevState => ({
+            ...prevState,
+            firstName: dataUserConnected.firstName,
+            lastName: dataUserConnected.lastName,
+            email: dataUserConnected.email,
+            phone: dataUserConnected.telephone
+        }))
+
+        timeOut = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000)   
+        
+        return () => {
+            clearTimeout(timeOut)
+        }
+        
     }, [])
 
     useEffect(() => {
@@ -91,6 +120,21 @@ const Checkout = () => {
             console.error(error);
         }
     }
+
+    //Condicional situation to display button
+    const buttonOrder = form.firstName && form.lastName && 
+                        form.phone && form.country &&
+                        form.adress && form.email && form.zip ? (
+                            <button 
+                                className="bg-green-600 text-white py-3 px-4 rounded text-center font-semibold w-full" 
+                                onClick={() => router.push("/checkout_payment")}
+                            > Place Order </button>
+                        ) : (
+                            <button 
+                                className="bg-gray-200 text-black py-3 px-4 rounded text-center font-semibold w-full" 
+                                disabled
+                            > Place Order </button>
+                        )
 
     let totalOrder = 0
 
@@ -265,8 +309,8 @@ const Checkout = () => {
                                 {
                                     cart && cart.map(item => (
                                         <div key={item.id} className="flex items-center justify-between border-b px-3 py-3 md:px-4 lg:px-6">
-                                            <span> R$ {item.name} X {item.quantity} </span>
-                                            <span> R$ { (item.price * item.quantity).toFixed(2)} </span>
+                                            <span> $ {item.name} X {item.quantity} </span>
+                                            <span> $ { (item.price * item.quantity).toFixed(2)} </span>
                                         </div>
                                     ))
                                 }
@@ -274,11 +318,11 @@ const Checkout = () => {
                             <div className="flex flex-col gap-5 mx-3 md:mx-4 lg:mx-6 py-4 border-b-4 border-black">
                                 <div className="flex items-center justify-between font-semibold">
                                     <span>SubTotal</span>
-                                    <span> R$ {totalOrder.toFixed(2)} </span>
+                                    <span> $ {totalOrder.toFixed(2)} </span>
                                 </div>
                                 <div className="flex items-center justify-between font-semibold">
                                     <span>Total</span>
-                                    <span> R$ {totalOrder.toFixed(2)} </span>
+                                    <span> $ {totalOrder.toFixed(2)} </span>
                                 </div>
                             </div>
                         </div>
@@ -289,7 +333,7 @@ const Checkout = () => {
                             you require assistance or wish to make alternate arrangements.
                         </p>
                         <div className="flex items-center justify-center px-3 md:px-4 lg:px-6 py-5 border-t">
-                            <button className="bg-green-600 text-white py-3 px-4 rounded text-center font-semibold w-full" onClick={() => router.push("/checkout_payment")}> Place Order </button>
+                            { buttonOrder }
                         </div>
                     </div>
                 </div>

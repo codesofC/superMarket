@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useState,  useEffect } from "react"
 import { useFirebase } from "../../Firebase/useFirebase"
 import { useDataContext } from "@/components/BigContainer/useDataContext"
-import { setDoc } from "firebase/firestore"
+import { setDoc, getDoc } from "firebase/firestore"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 
@@ -10,7 +10,9 @@ const SignUp = () => {
 
     const initialData = {
         email: "",
-        username: "",
+        firstName: "",
+        lastName: "",
+        telephone: "",
         password: "",
         confirmPassword: "",
         errorMessage: ""
@@ -30,7 +32,7 @@ const SignUp = () => {
 
     useEffect(() => {
         
-        return clearTimeout(timeOut)
+        return () => clearTimeout(timeOut)
     }, [timeOut])
 
     const updateForm = e => {
@@ -55,8 +57,9 @@ const SignUp = () => {
                 
                 setDoc(user(authUser.user.uid), {
                     email: form.email,
-                    username: form.username,
-                    password: form.password,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    telephone: form.telephone,
                     cart
                 })
             })
@@ -64,8 +67,10 @@ const SignUp = () => {
                 setUserConnect(true)
                 timeOut  = setTimeout(() => {
                     setIsLoading(false)
+                    setForm(initialData)
                     router.push("/")
                 }, 1500)
+                
             })
             .catch( err => {
                 setError(err.message)
@@ -75,7 +80,9 @@ const SignUp = () => {
     }
 
     const buttonSubmit = form.email && 
-                        form.username && 
+                        form.firstName && 
+                        form.lastName &&
+                        form.telephone &&
                         form.password.length > 5 && 
                         form.confirmPassword.length > 5 ? (
                             <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Submit</button>
@@ -95,6 +102,30 @@ const SignUp = () => {
                 {  errorMessage }
 
                 <div className="flex flex-col gap-2">
+                    <label htmlFor="firstName"> First Name <span className="text-red-400 font-bold">*</span></label>
+                    <input
+                        type="text"
+                        id='firstName'
+                        name="firstName"
+                        value={form.firstName}
+                        onChange={e => updateForm(e)}
+                        required
+                        className="w-full border py-3 px-2 rounded focus:outline-none"
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="lastName"> Last Name <span className="text-red-400 font-bold">*</span></label>
+                    <input
+                        type="text"
+                        id='lastName'
+                        name="lastName"
+                        value={form.lastName}
+                        onChange={e => updateForm(e)}
+                        required
+                        className="w-full border py-3 px-2 rounded focus:outline-none"
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
                     <label htmlFor="email">Email adress <span className="text-red-400 font-bold">*</span></label>
                     <input
                         type="email"
@@ -107,12 +138,12 @@ const SignUp = () => {
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="username"> Username <span className="text-red-400 font-bold">*</span></label>
+                    <label htmlFor="phone">Telephone <span className="text-red-400 font-bold">*</span></label>
                     <input
-                        type="text"
-                        id='username'
-                        name="username"
-                        value={form.username}
+                        type="tel"
+                        id='phone'
+                        name="telephone"
+                        value={form.telephone}
                         onChange={e => updateForm(e)}
                         required
                         className="w-full border py-3 px-2 rounded focus:outline-none"

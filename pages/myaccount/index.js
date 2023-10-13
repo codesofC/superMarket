@@ -1,35 +1,124 @@
+import { useEffect, useRef } from "react"
 import { useRouter } from "next/router"
+import Image from "next/image"
 import { useFirebase } from "@/Firebase/useFirebase"
 import { FiUser, FiUserCheck, FiMapPin } from "react-icons/fi"
 import { PiUserListFill } from "react-icons/pi"
 import { LiaUserLockSolid } from "react-icons/lia"
 import { MdSecurity, MdLogout } from "react-icons/md"
 import { BiChevronRight } from "react-icons/bi"
+import { useDataContext } from "@/components/BigContainer/useDataContext"
+import { runTransaction } from "firebase/firestore"
 
 const MyAccount = () => {
 
-    const { userConnect, setUserConnect, signout } = useFirebase()
+    const imgRef = useRef(null)
+    const inputFileRef = useRef(null)
 
-    const handleLogout = () => {
-        signout()
-        .then(() => setUserConnect(false))
-        router.push("/")
-    }
+    const { setUserConnect, userConnect, signout, db, user, uid } = useFirebase()
 
     const router = useRouter()
 
+    const { setIsLoading, dataUserConnected, setDataUserConnected } = useDataContext()
+    let timeOut
+
+
+    const handleLogout = () => {
+        setIsLoading(true)
+        signout()
+            .then(() => {
+                setUserConnect(false)
+                setIsLoading(false)
+            })
+
+        router.push("/")
+    }
+
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        timeOut = setTimeout(() => {
+            setIsLoading(false)
+        }, 1000)
+
+        return () => clearTimeout(timeOut)
+    }, [timeOut])
+
+    const handleProfil = () => {
+        if(inputFileRef.current.files && inputFileRef.current.files[0]){
+            const reader = new FileReader()
+
+            reader.onload = e => {
+                setDataUserConnected(prevState => ({
+                    ...prevState,
+                    profilImg: e.target.result
+                }))
+                try {
+                    runTransaction(db, async (transaction) => {
+                      const currentData = await transaction.get(user(uid))
+          
+                      if (!currentData.exists()) {
+                        throw "Data not found"
+                      }
+          
+                      transaction.update(user(uid), {
+                        ...currentData.data(),
+                        profilImg: e.target.result
+                      })
+                    })
+                  } catch (e) {
+                    console.error("Update Database failed!")
+                  }
+            }
+            reader.readAsDataURL(inputFileRef.current.files[0])
+        }
+    }
+
+    if (!userConnect) {
+        timeOut = setTimeout(() => {
+            router.push("/")
+        }, 500)
+    }
+
+    
+
     return (
-        !userConnect ? (
-            setTimeout(() => {
-                router.push("/signin")
-            }, 100)
-        ) : (
-            <div className="flex flex-col gap-4 items-center justify-center w-full md:w-4/6 lg:w-1/2 mx-auto my-12">
-            <div className="flex items-center justify-center gap-6 px-4 py-4 shadow-md w-4/6 md:mw-1/2 ">
-                <div className="flex items-center justify-center text-4xl px-4 py-4 border rounded-full"> <FiUser /> </div>
+        <div className="flex flex-col gap-4 items-center justify-center w-full md:w-4/6 lg:w-1/2 mx-auto my-12">
+            <div className="flex items-center justify-center gap-6 px-4 py-4 w-4/6 md:mw-1/2 ">
+                <div className="flex flex-col gap-3 items-center justify-center">
+                    <div className="flex items-center justify-center border rounded-full overflow-hidden w-[90px] h-[90px]">
+                        {
+                            !dataUserConnected.profilImg ? (
+                                <FiUser title="Add profil picture" className="text-center text-5xl" />
+                            ) : (
+                                <Image
+                                    src={dataUserConnected.profilImg}
+                                    width={60}
+                                    height={60}
+                                    alt="profil picture"
+                                    property={"true"}
+                                    className="w-full h-full object-contain"
+                                    ref={imgRef}
+                                />
+                            )
+                        }
+                    </div>
+                    <div className="relative flex items-center justify-center">
+                        <input 
+                            type="file"
+                            accept=".png, .jpg, .jpeg"
+                            className="absolute top-0 left-0 block w-full h-full opacity-0 z-10"
+                            ref={inputFileRef}
+                            onChange={handleProfil}
+                            onDrag={handleProfil}
+                        />
+                        <button className="px-3 py-1 bg-gray-200 text-gray-500 text-sm rounded"> Change profil </button>
+                    </div>
+                </div>
                 <div className="flex flex-col gap-2">
-                    <span className="text-lg font-bold"> Judelin Inélus </span>
-                    <span className="text-sm text-gray-700"> email000012@gmail.com </span>
+                    <span className="text-lg font-bold"> {`${dataUserConnected.firstName} ${dataUserConnected.lastName}`}  </span>
+                    <span className="text-sm text-gray-700"> {dataUserConnected.email} </span>
                 </div>
             </div>
             <div className="flex flex-col w-full">
@@ -110,7 +199,6 @@ const MyAccount = () => {
                 </div>
             </div>
         </div>
-        )
     )
 }
 
