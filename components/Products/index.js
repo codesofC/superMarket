@@ -2,6 +2,9 @@ import Image from "next/image"
 import { memo, useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+
 
 const Products = memo(({ product, isDescription }) => {
 
@@ -14,8 +17,9 @@ const Products = memo(({ product, isDescription }) => {
 
     useEffect(() => {
 
+        Aos.init({ duration: 1000})
         return () => clearTimeout(timeOut)
-    }, [timeOut])
+    }, [])
 
     const addToCart = (e, item) => {
         dispatch({
@@ -42,7 +46,7 @@ const Products = memo(({ product, isDescription }) => {
             <div className={`relative w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center items-center px-4 md:px-10 py-3 gap-x-4 gap-y-8 sm:gap-x-6 lg:gap-x-8 xl:gap-x-10 ${more || isDescription ? 'h-auto' : 'h-[50rem] lg:h-[30rem]'} overflow-y-hidden transition-all`}>
                 {
                     product && product.map(item => (
-                        <div key={item.id} className="w-full h-80 relative flex flex-col justify-end items-center cursor-pointer group border border-gray-100 shadow-lg md:shadow-sm hover:shadow-xl transition-shadow py-2">
+                        <div key={item.id} className="w-full h-80 relative flex flex-col justify-end items-center cursor-pointer group border border-gray-100 shadow-lg md:shadow-sm hover:shadow-xl transition-shadow py-2" data-aos="fade-up">
                             <div
                                 className="w-full h-40 sm:h-48 absolute left-50 top-4 flex items-center justify-center px-4 pb-5"
                                 onClick={() => goToItem(item.name)}

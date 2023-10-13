@@ -9,6 +9,8 @@ import { BiSolidDrink } from "react-icons/bi"
 import { PiBathtubBold } from "react-icons/pi"
 import { MdPets, MdOutlineLocalPharmacy } from "react-icons/md"
 import Link from 'next/link'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
 
 
 export default function Home({ }) {
@@ -19,6 +21,8 @@ export default function Home({ }) {
 
   useEffect(() => {
     setData(dataApi)
+
+    Aos.init({duration: 3000})
   }, [])
 
   useEffect(() => {
@@ -53,31 +57,31 @@ export default function Home({ }) {
       <main>
         <Brand />
 
-        <div className='mt-72 md:mt-60 lg:mt-40'>
+        <div className='mt-72 md:mt-60 lg:mt-36'>
           <div className='flex gap-4 md:gap-6 lg:gap-8 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
             <h1>Most Popular</h1>
             <p className='w-20 h-1 bg-green-700'></p>
           </div>
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8 xl:gap-12 justify-center items-center px-5 lg:px-56'>
-            <Link href={"/category/drunks"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+            <Link href={"/category/drunks"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100" data-aos="fade-up">
               <span className='text-6xl text-blue-400'> <BiSolidDrink /> </span>
               <p className='text-sm text-black'>
                 Drinks, Alcohol, Energy
               </p>
             </Link>
-            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100" data-aos="fade-down">
               <span className='text-6xl text-blue-400'> <PiBathtubBold /> </span>
               <p className='text-sm text-black'>
                 Hygiene, Personal care
               </p>
             </Link>
-            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100" data-aos="fade-up">
               <span className='text-6xl text-blue-400'> <MdPets /> </span>
               <p className='text-sm text-black'>
                 Pets, Domestic, Dog, Cat
               </p>
             </Link>
-            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100">
+            <Link href={"/"} className="flex flex-col gap-4 items-center px-2 py-6 shadow-md hover:shadow-lg border border-gray-100" data-aos="fade-down">
               <span className='text-6xl text-blue-400'> <MdOutlineLocalPharmacy /> </span>
               <p className='text-sm text-black'>
                 Health, Pharmacy
