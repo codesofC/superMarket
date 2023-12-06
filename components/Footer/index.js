@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import logoImg from "../../public/assets/mylogo.png"
+import logoImg from "@/public/assets/mylogo.png"
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 
 const Footer = () => {
