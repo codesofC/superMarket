@@ -1,15 +1,16 @@
 import Image from "next/image"
+import logoImg from "../../public/assets/mylogo.png"
 
 const Loading = () => {
 
     return (
         <div className="w-full h-full fixed top-0 left-0 flex items-center justify-center bg-white z-40">
             <div className="flex flex-col gap-3 items-center justify-center">
-                <div className="min-w-20 w-32 flex items-center justify-center animate-bounce">
+                <div className="flex items-center justify-center animate-bounce">
                     <Image
-                        src={'https://assets.stickpng.com/images/62fe5219f31142d937b30c5e.png'}
-                        width={500}
-                        height={500}
+                        src={logoImg}
+                        width={80}
+                        height={80}
                         alt="Picture"
                         priority={true}
                         className="w-full"

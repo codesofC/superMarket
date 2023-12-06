@@ -28,7 +28,7 @@ const ResultPayment = () => {
     }
 
   return (
-    <div className='my-5 flex flex-col items-center justify-center gap-4'>
+    <div className='my-5 flex flex-col items-center gap-4 min-h-[60vh]'>
         <p className='text-2xl font-semibold text-green-600 flex items-center justify-center px-6 py-3'> 
             Payment Approved
         </p>

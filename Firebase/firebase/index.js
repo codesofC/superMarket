@@ -11,12 +11,12 @@ import { createContext, useState } from "react";
 
 // Web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCmEfEm_feS3XQVrrGR4XfFdCDtze4cU6Y",
-  authDomain: "supermarket-ffee9.firebaseapp.com",
-  projectId: "supermarket-ffee9",
-  storageBucket: "supermarket-ffee9.appspot.com",
-  messagingSenderId: "558369749683",
-  appId: "1:558369749683:web:aae6a0e7e68e9a84e24ec6"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID
 };
 
 

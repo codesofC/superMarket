@@ -52,7 +52,7 @@ const CheckoutPayment = () => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        if (card.numberCard.length === 16 && card.dateCard.length === 5 && card.cvcCard > 2) {
+        if (card.numberCard.length === 16 && card.dateCard.length === 4 && card.cvcCard > 2) {
 
             dispatch({
                 type: "RESETCART"

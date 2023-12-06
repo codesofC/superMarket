@@ -11,7 +11,7 @@ const ProductName = ({ data}) => {
   const [description, setDescription] = useState(false)
   const [recommended, setRecommended] = useState([])
   const [quantity, setQuantity] = useState(1)
-  let rating = [false, false, false, false, false]
+  const rating = [false, false, false, false, false]
 
   //Use my custom hook for dataApiContext
   const { dataApi, setIsLoading } = useDataContext()

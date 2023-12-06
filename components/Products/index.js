@@ -2,6 +2,7 @@ import Image from "next/image"
 import { memo, useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
+import { HiMiniChevronDoubleRight } from "react-icons/hi2";
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 
@@ -41,6 +42,11 @@ const Products = memo(({ product, isDescription }) => {
         router.push(`/product/${arg.toLowerCase().replaceAll(" ", "").replaceAll("/", "-")}`)
     }
 
+    const handleMore = () => {
+        setMore(true)
+        router.push(`/category/${product[0].category.toLowerCase().replaceAll(" ", "")}`)
+    }
+
     return (
         <div className="relative w-full lg:w-11/12 xl:w-4/5 mx-auto">
             <div className={`relative w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center items-center px-4 md:px-10 py-3 gap-x-4 gap-y-8 sm:gap-x-6 lg:gap-x-8 xl:gap-x-10 ${more || isDescription ? 'h-auto' : 'h-[50rem] lg:h-[30rem]'} overflow-y-hidden transition-all`}>
@@ -66,7 +72,7 @@ const Products = memo(({ product, isDescription }) => {
                                 <p className="text-sky-950 text-md md:text-xl font-semibold">{item.name}</p>
                                 <p className="text-xl font-bold text-green-700">${item.price}</p>
                             </div>
-                            <div className="flex lg:hidden group-hover:flex overflow-hidden z-10 flex flex-col justify-center py-2 px-5 transition-all ease-in duration-300" >
+                            <div className="flex lg:hidden group-hover:flex overflow-hidden z-10 flex-col justify-center py-2 px-5 transition-all ease-in duration-300" >
                                 <button
                                     className="text-sm md:text-md px-4 py-1 rounded hover:bg-green-700 bg-white text-green-700 border border-green-700 hover:text-white font-semibold"
                                     onClick={(e) => addToCart(e, item)}
@@ -79,12 +85,12 @@ const Products = memo(({ product, isDescription }) => {
                 }
             </div>
             {
-                !more && !isDescription && <div className="w-full flex items-center justify-center absolute top-[103%] before:block before:w-full before:h-px before:absolute before:bg-gray-200 before:z-[-1]">
+               !more && !isDescription && <div className="flex items-center justify-center absolute top-[-3rem] right-4">
                     <span
-                        className="text-md px-12 py-1 bg-gray-200 font-bold rounded-lg cursor-pointer"
-                        onClick={() => setMore(true)}
+                        className="flex items-center gap-1 text-sm px-4 py-1 bg-gray-100 font-bold rounded-lg cursor-pointer"
+                        onClick={handleMore}
                     >
-                        More
+                        More <HiMiniChevronDoubleRight />
                     </span>
                 </div>
             }

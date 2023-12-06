@@ -1,18 +1,19 @@
 import Image from "next/image"
 import Link from "next/link"
+import logoImg from "../../public/assets/mylogo.png"
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"
 
 const Footer = () => {
   return (
     <footer className="w-full flex flex-col gap-6 px-12 lg:px-24 py-6 mt-28 bg-gray-50">
-        <div className="w-2/5 md:w-1/5 xl:w-[10%]">
+        <div className="">
             <Image
-                src={"https://assets.stickpng.com/images/62fe5219f31142d937b30c5e.png"}
-                width={500}
-                height={500}
+                src={logoImg}
+                width={80}
+                height={80}
                 alt="Logo picture"
                 priority={true}
-                className="w-full"
+                className="object-contain"
             />
         </div>
         <ul className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 items-center justify-between mx-auto">

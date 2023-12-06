@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { useFirebase } from "@/Firebase/useFirebase"
+import logoImg from  "../../public/assets/mylogo.png"
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa"
 import { BiMenuAltLeft, BiSearch, BiChevronRight } from "react-icons/bi"
 import { FiUser } from "react-icons/fi"
@@ -43,11 +44,11 @@ const Navbar = ({ setOpenCart }) => {
                     <li><Link href={''} className="hover:text-orange-400"> <FaTwitter /> </Link></li>
                 </ul>
             </div>
-            <div className="relative flex flex-wrap justify-between items-center px-5 md:px-10 lg:px-18 xl:px-32 py-5 w-full border-b border-gray">
+            <div className="relative flex flex-wrap justify-between items-center px-5 md:px-10 lg:px-18 xl:px-32 py-3 w-full border-b border-gray">
                 <button className="text-2xl md:hidden" onClick={() => setShowMenu(true)}> <BiMenuAltLeft /> </button>
-                <div className="w-32 min-w-20 flex items-center justify-center">
+                <div className="flex items-center justify-center">
                     <Image
-                        src={'https://assets.stickpng.com/images/62fe5219f31142d937b30c5e.png'}
+                        src={logoImg}
                         width={500}
                         height={500}
                         alt="Picture"
@@ -166,16 +167,16 @@ const Navbar = ({ setOpenCart }) => {
                     <div className="w-full md:w-auto" onClick={() => setShowMenu(false)}>
                         <button className="flex items-center gap-1 w-full md:auto text-lg text-white py-2 px-3 bg-green-700 rounded"> <span> <RiMenuUnfoldLine /> </span> All Categories </button>
                     </div>
-                    <li className="hover:bg-green-700 md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
+                    <li className="hover:bg-green-700 hover:text-white md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
                         <Link href="/" className="w-full md:w-auto block md:inline"> Home </Link>
                     </li>
-                    <li className="hover:bg-green-700 md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
+                    <li className="hover:bg-green-700 hover:text-white md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
                         <Link href={`/category/${("Fruits and Vegetables").toLowerCase().replaceAll(" ", "")}`} className="w-full md:w-auto block md:inline"> Fruits & Vegetables </Link>
                     </li>
-                    <li className="hover:bg-green-700 md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
+                    <li className="hover:bg-green-700 hover:text-white md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
                         <Link href={`/category/${("Packaged products").toLowerCase().replaceAll(" ", "")}`} className="w-full md:w-auto block md:inline"> Packaged products</Link>
                     </li>
-                    <li className="hover:bg-green-700 md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
+                    <li className="hover:bg-green-700 hover:text-white md:hover:bg-transparent md:hover:text-orange-500 w-full md:w-auto font-semibold md:text-black text-lg md:text-md px-3 md:px-0 py-2 md:py-0" onClick={() => setShowMenu(false)}>
                         <Link href={`/category/${("Drunks").toLowerCase().replaceAll(" ", "")}`} className="w-full md:w-auto block md:inline"> Drunks </Link>
                     </li>
 

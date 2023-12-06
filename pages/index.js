@@ -11,6 +11,7 @@ import { MdPets, MdOutlineLocalPharmacy } from "react-icons/md"
 import Link from 'next/link'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
+import Newsletter from '@/components/Newsletter'
 
 
 export default function Home({ }) {
@@ -22,7 +23,7 @@ export default function Home({ }) {
   useEffect(() => {
     setData(dataApi)
 
-    Aos.init({duration: 3000})
+    Aos.init({duration: 2000})
   }, [])
 
   useEffect(() => {
@@ -92,23 +93,27 @@ export default function Home({ }) {
 
         {
           <div className='mt-28 md:mt-40 xl:mt-36'>
-            <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
+            <div className='flex gap-3 px-5 mb-5 text-xl lg:text-3xl font-bold text-sky-950 items-center lg:px-32'>
               <h1>Fruits and vegetables</h1>
               <p className='w-20 h-1 bg-green-700'></p>
             </div>
             <Products product={vegetableData} />
           </div>
         }
+        <div className='mt-28 flex px-4 py-4 mx-5 lg:mx-20 xl:mx-48 gap-6 items-center justify-between  bg-green-600 rounded-md'>
+          <p className='text-white text-md md:text-xl font-bold'>Fusce congue lorem id porta volutpat.</p>
+          <button className="bg-orange-400 text-white px-2 sm:px-5 py-3 text-sm sm:text-md lg:text-lg font-bold rounded"> Shop now </button>
+        </div>
         {
           <div className='mt-28'>
-            <div className='flex gap-3 px-5 mb-5 text-3xl font-bold text-sky-950 items-center lg:px-32'>
+            <div className='flex gap-3 px-5 mb-5 text-xl lg:text-3xl font-bold text-sky-950 items-center lg:px-32'>
               <h1>Packaged products</h1>
               <p className='w-20 h-1 bg-green-700'></p>
             </div>
             <Products product={PackagedProductsData} />
           </div>
         }
-        
+        <Newsletter />
       </main>
     </>
   )
