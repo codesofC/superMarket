@@ -1,5 +1,5 @@
 import Image from "next/image"
-import logoImg from "../../public/assets/mylogo.png"
+import logoImg from "@/public/assets/mylogo.png"
 
 const Loading = () => {
 
